@@ -1,0 +1,26 @@
+* mybigword
+Use Zipf frequency of each word to extract English big words.
+
+The words whose Zipf frequency less than =mybigword-upper-limit= are big words.
+
+Zipf scale was proposed by Marc Brysbaert, who created the SUBTLEX lists.
+Zipf frequency of a word is the base-10 logarithm of the number of times it
+appears per billion words.
+
+A word with Zipf value 6 appears once per thousand words,for example, and a
+word with Zipf value 3 appears once per million words.
+
+Reasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing
+here is 1.0.
+
+We use 0 as the default Zipf value for words that do not appear in the given words.
+although it should mean one occurrence per billion words."
+
+Thanks to https://github.com/LuminosoInsight/wordfreq for providing the data.
+
+* Install
+Place =mybigword.el= and =eng.zipf= under Load Path. Then add =(require 'mybigword)= to your configuration.
+* Usage
+Run =mybigword-show-big-words-from-file=.
+* Contact me
+Report bugs at [[https://github.com/redguardtoo/mybigword]].
