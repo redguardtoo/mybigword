@@ -22,5 +22,80 @@ Thanks to https://github.com/LuminosoInsight/wordfreq for providing the data.
 Place =mybigword.el= and =eng.zipf= under Load Path. Then add =(require 'mybigword)= to your configuration.
 * Usage
 Run =mybigword-show-big-words-from-file=.
+
+Here is the big words extracted from the script of [[https://www.imdb.com/title/tt0708665/?ref_=ttep_ep12][Star Trek: Deep Space Nine  S06E12 "Who Mourns for Morn?"]]:
+#+begin_example
+yridian -1
+thumbprint -1
+optronic -1
+nahsk -1
+morny -1
+lurian -1
+livanian -1
+lissepian -1
+latinum -1
+larell -1
+krit -1
+jadzia -1
+iocated -1
+holosuites -1
+holo -1
+hmph -1
+hain -1
+fella -1
+eyedropper -1
+broik -1
+bolias -1
+bolian -1
+amin -1
+aboveboard 1.53
+commiserating 1.71
+craning 1.81
+commiserate 2.14
+luria 2.22
+imbibe 2.22
+objet 2.24
+unsealed 2.5
+doze 2.63
+froth 2.68
+abdicate 2.7
+matador 2.78
+nullify 2.81
+heartwarming 2.82
+bequest 2.83
+intrude 2.84
+enterprising 2.92
+morn 3.0
+inconsiderate 3.0
+apprehend 3.02
+bequeathed 3.05
+beet 3.05
+sparring 3.07
+hologram 3.08
+quark 3.11
+assay 3.15
+gratification 3.17
+unload 3.21
+diligent 3.21
+lobe 3.26
+defer 3.26
+startled 3.27
+infirmary 3.28
+furnishings 3.28
+renounce 3.29
+extortion 3.32
+afterlife 3.33
+heist 3.34
+blackmail 3.36
+evade 3.37
+bribery 3.37
+repayment 3.38
+extradition 3.39
+projector 3.41
+stash 3.42
+stool 3.45
+forgiving 3.48
+expire 3.48
+#+end_example
 * Contact me
 Report bugs at [[https://github.com/redguardtoo/mybigword]].
