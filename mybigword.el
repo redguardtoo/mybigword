@@ -179,6 +179,22 @@ If nil, the wordnet data is used."
       (setq rlt (match-string 1 raw-word))))
     rlt))
 
+(defun mybigword-show-big-words-from-content (content)
+  "Show words whose zipf frequency is below `mybigword-upper-limit' in CONTENT."
+  (unless mybigword-cache (mybigword-update-cache))
+  (let* ((big-words (mybigword-extract-words content)))
+    (cond
+       (big-words
+        ;; sort windows
+        (setq big-words (sort big-words (lambda (a b) (< (cdr a) (cdr b)))))
+        (switch-to-buffer-other-window "*BigWords*")
+        (erase-buffer)
+        (dolist (bw big-words)
+          (insert (format "%s %s\n" (car bw) (cdr bw))))
+        (goto-char (point-min)))
+       (t
+        (message "No word is found")))))
+
 (defmacro mybigword-push-cand (word dict cands)
   "Get WORD and its frequency from DICT.  Push them into CANDS."
   `(push (cons ,word (mybigword-extract-freq ,word ,dict)) ,cands))
@@ -220,6 +236,11 @@ If nil, the wordnet data is used."
     rlt))
 
 ;;;###autoload
+(defun mybigword-show-big-words-from-current-buffer ()
+  (interactive)
+  (mybigword-show-big-words-from-content (buffer-string)))
+
+;;;###autoload
 (defun mybigword-show-big-words-from-file (file)
   "Show words whose zipf frequency is below `mybigword-upper-limit' in FILE."
   (interactive (list (read-file-name "Find file: " nil default-directory t)))
@@ -227,19 +248,8 @@ If nil, the wordnet data is used."
     (unless mybigword-cache (mybigword-update-cache))
     (let* ((content (with-temp-buffer
                       (insert-file-contents file)
-                      (buffer-string)))
-           (big-words (mybigword-extract-words content)))
-      (cond
-       (big-words
-        ;; sort windows
-        (setq big-words (sort big-words (lambda (a b) (< (cdr a) (cdr b)))))
-        (switch-to-buffer-other-window "*BigWords*")
-        (erase-buffer)
-        (dolist (bw big-words)
-          (insert (format "%s %s\n" (car bw) (cdr bw))))
-        (goto-char (point-min)))
-       (t
-        (message "No word is found"))))))
+                      (buffer-string))))
+      (mybigword-show-big-words-from-content content))))
 
 (provide 'mybigword)
 ;;; mybigword.el ends here

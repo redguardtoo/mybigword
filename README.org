@@ -21,7 +21,7 @@ Thanks to https://github.com/LuminosoInsight/wordfreq for providing the data.
 * Install
 Place =mybigword.el= and =eng.zipf= under Load Path. Then add =(require 'mybigword)= to your configuration.
 * Usage
-Run =mybigword-show-big-words-from-file=.
+Run =mybigword-show-big-words-from-file= or =mybigword-show-big-words-from-current-buffer=.
 
 Here is the big words extracted from the script of [[https://www.imdb.com/title/tt0708665/?ref_=ttep_ep12][Star Trek: Deep Space Nine  S06E12 "Who Mourns for Morn?"]]:
 #+begin_example
