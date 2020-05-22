@@ -28,7 +28,8 @@
 ;;; Commentary:
 
 ;; This program extract big words from text.
-;; The words whose Zipf frequency less than `mybigword-upper-limit' are big words.
+;; The words whose Zipf frequency less than `mybigword-upper-limit' are
+;; big words.
 ;;
 ;; Zipf scale was proposed by Marc Brysbaert, who created the SUBTLEX lists.
 ;; Zipf frequency of a word is the base-10 logarithm of the number of times it
@@ -37,17 +38,18 @@
 ;; A word with Zipf value 6 appears once per thousand words,for example, and a
 ;; word with Zipf value 3 appears once per million words.
 ;;
-;; Reasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing
-;; here is 1.0.
+;; Reasonable Zipf values are between 0 and 8, but the minimum Zipf value
+;; appearing here is 1.0.
 ;;
-;; We use 0 as the default Zipf value for words that do not appear in the given wordlist,
-;; although it should mean one occurrence per billion words."
+;; We use 0 as the default Zipf value for words that do not appear in the given
+;; word list,although it should mean one occurrence per billion words."
 ;;
 ;; Thanks to https://github.com/LuminosoInsight/wordfreq for providing the data.
 ;;
 ;; Usage,
 ;;
 ;;   Run `mybigword-show-big-words-from-file'
+;;   Run `mybigword-show-big-words-from-current-buffer'
 
 ;;; Code:
 
@@ -57,9 +59,9 @@
 
 (defcustom mybigword-data-file nil
   "The word frequency file whose lines are sorted alphabetically.
-Each line has two fields.  The first field is the lowercased word.
+Each line has two fields.  The first field is the lowercase word.
 The second field is the frequency usage of the word.
-If nil, the wordnet data is used."
+If nil, the default data is used."
   :group 'mybigword
   :type 'string)
 
@@ -101,7 +103,7 @@ If nil, the wordnet data is used."
   :type '(repeat string))
 
 (defcustom mybigword-upper-limit 4
-  "The word whose zipf frequency is below this limit is displayed."
+  "The word whose zipf frequency is below this limit is big word."
   :group 'mybigword
   :type 'float)
 
@@ -237,12 +239,13 @@ If nil, the wordnet data is used."
 
 ;;;###autoload
 (defun mybigword-show-big-words-from-current-buffer ()
+  "Show big words in current buffer."
   (interactive)
   (mybigword-show-big-words-from-content (buffer-string)))
 
 ;;;###autoload
 (defun mybigword-show-big-words-from-file (file)
-  "Show words whose zipf frequency is below `mybigword-upper-limit' in FILE."
+  "Show bug words from FILE."
   (interactive (list (read-file-name "Find file: " nil default-directory t)))
   (when (and file (file-exists-p file))
     (unless mybigword-cache (mybigword-update-cache))
