@@ -1,11 +1,11 @@
-;;; mybigword.el --- Use Zipf frequency of each word to extract English big words
-
+;;; mybigword.el --- Use Zipf frequency of each word to extract English big words -*- lexical-binding: t; -*-
+;;
 ;; Copyright (C) 2020 Chen Bin <chenbin DOT sh AT gmail.com>
-
+;;
 ;; Author: Chen Bin <chenbin DOT sh AT gmail.com>
 ;; URL: http://github.com/redguardtoo/mybigword
-;; Version: 0.0.1
-;; Keywords: dictionary
+;; Version: 0.0.2
+;; Keywords: convenience
 ;; Package-Requires: ((emacs "24.4"))
 ;;
 ;; This file is not part of GNU Emacs.
@@ -66,8 +66,7 @@ If nil, the default data is used."
   :type 'string)
 
 (defcustom mybigword-excluded-words
-  '(
-    "anybody"
+  '("anybody"
     "anymore"
     "anyone"
     "anyway"
@@ -96,8 +95,7 @@ If nil, the default data is used."
     "then"
     "wasn"
     "worry"
-    "wouldn"
-    )
+    "wouldn")
   "The words being excluded."
   :group 'mybigword
   :type '(repeat string))
@@ -111,6 +109,9 @@ If nil, the default data is used."
 (defvar mybigword-cache nil
   "Cached frequency data.")
 
+(defvar mybigword-debug nil
+  "For debug only.")
+
 ;;;###autoload
 (defun mybigword-update-cache ()
   "Update cache using `mybigword-data-file'."
@@ -123,8 +124,12 @@ If nil, the default data is used."
          end
          raw-content
          content)
+
+    (when mybigword-debug
+      (message "mybigword-update-cache called file=%s" file))
+
     (when (file-exists-p file)
-      ;; initialize hashtable whose key is from a...z
+      ;; initialize hash table whose key is from a...z
       (setq content (make-hash-table :test #'equal))
 
       ;; read content of file
@@ -195,7 +200,7 @@ If nil, the default data is used."
           (insert (format "%s %s\n" (car bw) (cdr bw))))
         (goto-char (point-min)))
        (t
-        (message "No word is found")))))
+        (message "No big word is found!")))))
 
 (defmacro mybigword-push-cand (word dict cands)
   "Get WORD and its frequency from DICT.  Push them into CANDS."
@@ -209,16 +214,22 @@ If nil, the default data is used."
 ;;;###autoload
 (defun mybigword-extract-words (text)
   "Words whose usage frequency is below `mybigword-upper-limit' in TEXT."
-  (let* ((raw-words (mapcar 'downcase (split-string text "[^A-Za-z]+")))
-         (words (delq nil (delete-dups (sort raw-words 'string<))))
+  (let* ((raw-words (mapcar #'downcase (split-string text "[^A-Za-z]+")))
+         (words (delq nil (delete-dups (sort raw-words #'string<))))
          h str
          rlt)
+
+    (when mybigword-debug
+      (message "mybigword-cache file=%s size=%s"
+               (plist-get mybigword-cache :file)
+               (plist-get mybigword-cache :filesize)))
+
     (when mybigword-cache
       (setq h (plist-get mybigword-cache :content))
       (dolist (word words)
         (when (and (> (length word) 3)
                    (setq str (gethash (elt word 0) h)))
-          (let* (freq cands (max-item '(nil . 0)))
+          (let* (cands (max-item '(nil . 0)))
             (mybigword-push-cand word str cands)
             (mybigword-push-cand (mybigword-convert-word word) str cands)
             (mybigword-push-cand (mybigword-convert-word-again word) str cands)

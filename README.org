@@ -19,7 +19,7 @@ although it should mean one occurrence per billion words."
 Thanks to https://github.com/LuminosoInsight/wordfreq for providing the data.
 
 * Install
-Place =mybigword.el= and =eng.zipf= under Load Path. Then add =(require 'mybigword)= to your configuration.
+Place =mybigword.el= and =eng.zipf= under [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Library-Search.html][Load Path]]. Then add =(require 'mybigword)= to your configuration.
 * Usage
 Run =mybigword-show-big-words-from-file= or =mybigword-show-big-words-from-current-buffer=.
 
