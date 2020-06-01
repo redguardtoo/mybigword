@@ -220,6 +220,7 @@ If nil, the default data is used."
          rlt)
 
     (when mybigword-debug
+      (message "mybigword-extract-words called. words=%s" words)
       (message "mybigword-cache file=%s size=%s"
                (plist-get mybigword-cache :file)
                (plist-get mybigword-cache :filesize)))
