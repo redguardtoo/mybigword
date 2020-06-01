@@ -1,5 +1,5 @@
 * mybigword
-Use Zipf frequency of each word to extract English big words.
+Vocabulary builder using Zipf to extract English big words
 
 The words whose Zipf frequency less than =mybigword-upper-limit= are big words.
 
@@ -99,3 +99,7 @@ expire 3.48
 #+end_example
 * Contact me
 Report bugs at [[https://github.com/redguardtoo/mybigword]].
+* License
+This program is free software: you can redistribute it and/or modify it under the terms of the [[https://raw.githubusercontent.com/redguardtoo/mybigword/master/LICENSE][GNU General Public License]] as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the [[https://raw.githubusercontent.com/redguardtoo/mybigword/master/LICENSE][GNU General Public License]] for more details.

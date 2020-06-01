@@ -1,9 +1,9 @@
-;;; mybigword.el --- Use Zipf frequency of each word to extract English big words -*- lexical-binding: t; -*-
+;;; mybigword.el --- Vocabulary builder using Zipf to extract English big words -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2020 Chen Bin <chenbin DOT sh AT gmail.com>
 ;;
 ;; Author: Chen Bin <chenbin DOT sh AT gmail.com>
-;; URL: http://github.com/redguardtoo/mybigword
+;; URL: https://github.com/redguardtoo/mybigword
 ;; Version: 0.0.2
 ;; Keywords: convenience
 ;; Package-Requires: ((emacs "24.4"))
@@ -23,7 +23,7 @@
 ;; GNU General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -208,7 +208,7 @@ If nil, the default data is used."
 
 (defmacro mybigword-push-word (word frequency result)
   "Push WORD FREQUENCY into RESULT."
-  `(when (not (member ,word mybigword-excluded-words))
+  `(unless (member ,word mybigword-excluded-words)
      (push (cons ,word ,frequency) ,result)))
 
 ;;;###autoload
