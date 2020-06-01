@@ -4,7 +4,7 @@
 ;;
 ;; Author: Chen Bin <chenbin DOT sh AT gmail.com>
 ;; URL: https://github.com/redguardtoo/mybigword
-;; Version: 0.0.2
+;; Version: 0.0.3
 ;; Keywords: convenience
 ;; Package-Requires: ((emacs "24.4"))
 ;;
@@ -247,6 +247,9 @@ If nil, the default data is used."
              (t
               ;; word is not found in dictionary
               (mybigword-push-word word -1 rlt)))))))
+    ;; need remove duplicates
+    ;; for example, "notifies" and "notify" is actually one word
+    (setq rlt (delq nil (delete-dups rlt)))
     rlt))
 
 ;;;###autoload
