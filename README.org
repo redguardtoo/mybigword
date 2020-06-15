@@ -98,10 +98,14 @@ forgiving 3.48
 expire 3.48
 #+end_example
 * Tips
+** Exclude words
 Customize =mybigword-excluded-words= or =mybigword-personal-excluded-words= to exclude words.
-
+** Format output
 Customize =mybigword-default-format-function= to format the word for display.
 
+For example, if it's =mybigword-format-with-dictionary=, the =dictionary-definition= is used to find the definitions of all big words.
+
+** Hide words
 Customize =mybigword-hide-word-function= to hide word for display.
 * Contact me
 Report bugs at [[https://github.com/redguardtoo/mybigword]].

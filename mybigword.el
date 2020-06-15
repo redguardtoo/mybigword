@@ -4,7 +4,7 @@
 ;;
 ;; Author: Chen Bin <chenbin DOT sh AT gmail.com>
 ;; URL: https://github.com/redguardtoo/mybigword
-;; Version: 0.0.3
+;; Version: 0.0.4
 ;; Keywords: convenience
 ;; Package-Requires: ((emacs "24.4"))
 ;;
@@ -56,10 +56,15 @@
 ;; exclude words.
 ;;
 ;; Customize `mybigword-default-format-function' to format the word for display.
+;; If it's `mybigword-format-with-dictionary', the `dictionary-definition' is used to
+;; find the definitions of all big words.
+;;
 ;; Customize `mybigword-hide-word-function' to hide word for display
 ;;
 
 ;;; Code:
+
+(require 'dictionary nil t)
 
 (defgroup mybigword nil
   "Filter the words by the frequency usage of each word."
@@ -119,7 +124,8 @@ If nil, the default data is used."
 
 (defcustom mybigword-default-format-function
   'mybigword-format-word
-  "The function to format big word before displaying it."
+  "The function to format big word before displaying it.
+If it's `mybigword-format-with-dictionary', the `dictionary-definition' is used."
   :group 'mybigword
   :type 'function)
 
@@ -134,7 +140,7 @@ If nil, the default data is used."
   :type 'boolean)
 
 (defcustom mybigword-hide-word-function nil
-  "The function to hide a word."
+  "The function to hide a word which has one parameter \" word\"."
   :group 'mybigword
   :type 'function)
 
@@ -219,11 +225,16 @@ If nil, the default data is used."
       (setq rlt (match-string 1 raw-word))))
     rlt))
 
-(defun mybigword-format-word (info)
-  "Format INFO of big word."
-  (let* ((word (car info))
-         (zipf (cdr info)))
-    (format "%s %s\n" word zipf)))
+(defun mybigword-format-word (word zipf)
+  "Format WORD and ZIPF."
+  (format "%s %s\n" word zipf))
+
+(defun mybigword-format-with-dictionary (word zipf)
+  "Format WORD and ZIPF with dictionary api."
+  (ignore zipf)
+  (condition-case nil
+      (concat (dictionary-definition word) "\n\n\n")
+    (error nil)))
 
 (defun mybigword-show-big-words-from-content (content)
   "Show words whose zipf frequency is below `mybigword-upper-limit' in CONTENT."
@@ -236,10 +247,14 @@ If nil, the default data is used."
       (switch-to-buffer-other-window "*BigWords*")
       (erase-buffer)
       (dolist (bw big-words)
-        (unless (or (and mybigword-hide-unknown-word (eq (cdr bw) -1))
-                    (and mybigword-hide-word-function
-                         (not (funcall mybigword-hide-word-function bw))))
-          (insert (funcall mybigword-default-format-function bw))))
+        (let* (str
+               (word (car bw))
+               (zipf (cdr bw)))
+          (unless (or (and mybigword-hide-unknown-word (eq zipf -1))
+                      (and mybigword-hide-word-function
+                           (not (funcall mybigword-hide-word-function word))))
+            (when (setq str (funcall mybigword-default-format-function word zipf))
+              (insert str)))))
       (goto-char (point-min)))
      (t
       (message "No big word is found!")))))
