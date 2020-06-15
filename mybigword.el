@@ -89,11 +89,13 @@ If nil, the default data is used."
     "our"
     "ours"
     "ourselves"
+    "shouldn"
     "sorry"
     "thank"
     "theirs"
     "then"
     "wasn"
+    "weren"
     "worry"
     "wouldn")
   "The words being excluded."
@@ -104,6 +106,11 @@ If nil, the default data is used."
   "The word whose zipf frequency is below this limit is big word."
   :group 'mybigword
   :type 'float)
+
+(defcustom mybigword-hide-unknown-word t
+  "Hide unknown word."
+  :group 'mybigword
+  :type 'boolean)
 
 ;; internal variable
 (defvar mybigword-cache nil
@@ -197,7 +204,9 @@ If nil, the default data is used."
         (switch-to-buffer-other-window "*BigWords*")
         (erase-buffer)
         (dolist (bw big-words)
-          (insert (format "%s %s\n" (car bw) (cdr bw))))
+          (unless (and mybigword-hide-unknown-word
+                       (eq (cdr bw) -1))
+            (insert (format "%s %s\n" (car bw) (cdr bw)))))
         (goto-char (point-min)))
        (t
         (message "No big word is found!")))))
