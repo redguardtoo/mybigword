@@ -97,6 +97,12 @@ stool 3.45
 forgiving 3.48
 expire 3.48
 #+end_example
+* Tips
+Customize =mybigword-excluded-words= or =mybigword-personal-excluded-words= to exclude words.
+
+Customize =mybigword-default-format-function= to format the word for display.
+
+Customize =mybigword-hide-word-function= to hide word for display.
 * Contact me
 Report bugs at [[https://github.com/redguardtoo/mybigword]].
 * License

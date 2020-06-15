@@ -50,6 +50,14 @@
 ;;
 ;;   Run `mybigword-show-big-words-from-file'
 ;;   Run `mybigword-show-big-words-from-current-buffer'
+;;
+;;
+;; Customize `mybigword-excluded-words' or `mybigword-personal-excluded-words' to
+;; exclude words.
+;;
+;; Customize `mybigword-default-format-function' to format the word for display.
+;; Customize `mybigword-hide-word-function' to hide word for display
+;;
 
 ;;; Code:
 
@@ -70,6 +78,8 @@ If nil, the default data is used."
     "anymore"
     "anyone"
     "anyway"
+    "aren"
+    "brien"
     "couldn"
     "dear"
     "didn"
@@ -102,6 +112,17 @@ If nil, the default data is used."
   :group 'mybigword
   :type '(repeat string))
 
+(defcustom mybigword-personal-excluded-words nil
+  "The personal words being excluded."
+  :group 'mybigword
+  :type '(repeat string))
+
+(defcustom mybigword-default-format-function
+  'mybigword-format-word
+  "The function to format big word before displaying it."
+  :group 'mybigword
+  :type 'function)
+
 (defcustom mybigword-upper-limit 4
   "The word whose zipf frequency is below this limit is big word."
   :group 'mybigword
@@ -111,6 +132,11 @@ If nil, the default data is used."
   "Hide unknown word."
   :group 'mybigword
   :type 'boolean)
+
+(defcustom mybigword-hide-word-function nil
+  "The function to hide a word."
+  :group 'mybigword
+  :type 'function)
 
 ;; internal variable
 (defvar mybigword-cache nil
@@ -158,9 +184,9 @@ If nil, the default data is used."
                (substring-no-properties raw-content beg (length raw-content))
                content)
       (setq mybigword-cache (list :content content
-                                 :file file
-                                 :timestamp (float-time (current-time))
-                                 :filesize (nth 7 (file-attributes file))))
+                                  :file file
+                                  :timestamp (float-time (current-time))
+                                  :filesize (nth 7 (file-attributes file))))
       (message "Frequency file %s is loaded." file))))
 
 (defmacro mybigword-extract-freq (word str)
@@ -193,23 +219,30 @@ If nil, the default data is used."
       (setq rlt (match-string 1 raw-word))))
     rlt))
 
+(defun mybigword-format-word (info)
+  "Format INFO of big word."
+  (let* ((word (car info))
+         (zipf (cdr info)))
+    (format "%s %s\n" word zipf)))
+
 (defun mybigword-show-big-words-from-content (content)
   "Show words whose zipf frequency is below `mybigword-upper-limit' in CONTENT."
   (unless mybigword-cache (mybigword-update-cache))
   (let* ((big-words (mybigword-extract-words content)))
     (cond
-       (big-words
-        ;; sort windows
-        (setq big-words (sort big-words (lambda (a b) (< (cdr a) (cdr b)))))
-        (switch-to-buffer-other-window "*BigWords*")
-        (erase-buffer)
-        (dolist (bw big-words)
-          (unless (and mybigword-hide-unknown-word
-                       (eq (cdr bw) -1))
-            (insert (format "%s %s\n" (car bw) (cdr bw)))))
-        (goto-char (point-min)))
-       (t
-        (message "No big word is found!")))))
+     (big-words
+      ;; sort windows
+      (setq big-words (sort big-words (lambda (a b) (< (cdr a) (cdr b)))))
+      (switch-to-buffer-other-window "*BigWords*")
+      (erase-buffer)
+      (dolist (bw big-words)
+        (unless (or (and mybigword-hide-unknown-word (eq (cdr bw) -1))
+                    (and mybigword-hide-word-function
+                         (not (funcall mybigword-hide-word-function bw))))
+          (insert (funcall mybigword-default-format-function bw))))
+      (goto-char (point-min)))
+     (t
+      (message "No big word is found!")))))
 
 (defmacro mybigword-push-cand (word dict cands)
   "Get WORD and its frequency from DICT.  Push them into CANDS."
@@ -217,7 +250,8 @@ If nil, the default data is used."
 
 (defmacro mybigword-push-word (word frequency result)
   "Push WORD FREQUENCY into RESULT."
-  `(unless (member ,word mybigword-excluded-words)
+  `(unless (or (member ,word mybigword-excluded-words)
+               (member ,word mybigword-personal-excluded-words))
      (push (cons ,word ,frequency) ,result)))
 
 ;;;###autoload
