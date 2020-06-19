@@ -112,7 +112,9 @@ If nil, the default data is used."
     "wasn"
     "weren"
     "worry"
-    "wouldn")
+    "wouldn"
+    "yourself"
+    "yourselves")
   "The words being excluded."
   :group 'mybigword
   :type '(repeat string))
