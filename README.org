@@ -1,53 +1,29 @@
 * mybigword
-Vocabulary builder using Zipf to extract English big words
+Vocabulary builder using Zipf to extract English big words.
 
-The words whose Zipf frequency less than =mybigword-upper-limit= are big words.
-
-Zipf scale was proposed by Marc Brysbaert, who created the SUBTLEX lists.
 Zipf frequency of a word is the base-10 logarithm of the number of times it
-appears per billion words.
-
-A word with Zipf value 6 appears once per thousand words,for example, and a
-word with Zipf value 3 appears once per million words.
-
-Reasonable Zipf values are between 0 and 8, but the minimum Zipf value appearing
-here is 1.0.
-
-We use 0 as the default Zipf value for words that do not appear in the given words.
-although it should mean one occurrence per billion words."
+appears per billion words. It's proposed by Marc Brysbaert.
 
 Thanks to https://github.com/LuminosoInsight/wordfreq for providing the data.
+
+The program provides many tools to help you master big words,
+- extract big words using Zipf
+- automatically look up and output word definition
+- parse the subtitle (*.srt) and replay the movie when the word is spoken
+
+Screenshot:
+
+[[file:demo.png]]
 
 * Install
 Place =mybigword.el= and =eng.zipf= under [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Library-Search.html][Load Path]]. Then add =(require 'mybigword)= to your configuration.
 * Usage
-Run =mybigword-show-big-words-from-file= or =mybigword-show-big-words-from-current-buffer=.
+Run =mybigword-show-big-words-from-file= or =mybigword-show-big-words-from-current-buffer=. The words whose Zipf frequency less than =mybigword-upper-limit= are extracted as big words.
+
+The above commands can be customized to look up word definition. See the tip [[Format output]].
 
 Here is the big words extracted from the script of [[https://www.imdb.com/title/tt0708665/?ref_=ttep_ep12][Star Trek: Deep Space Nine  S06E12 "Who Mourns for Morn?"]]:
 #+begin_example
-yridian -1
-thumbprint -1
-optronic -1
-nahsk -1
-morny -1
-lurian -1
-livanian -1
-lissepian -1
-latinum -1
-larell -1
-krit -1
-jadzia -1
-iocated -1
-holosuites -1
-holo -1
-hmph -1
-hain -1
-fella -1
-eyedropper -1
-broik -1
-bolias -1
-bolian -1
-amin -1
 aboveboard 1.53
 commiserating 1.71
 craning 1.81
