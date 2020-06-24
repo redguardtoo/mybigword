@@ -7,9 +7,11 @@ appears per billion words. It's proposed by Marc Brysbaert.
 Thanks to https://github.com/LuminosoInsight/wordfreq for providing the data.
 
 The program provides many tools to help you master big words,
-- extract big words using Zipf
-- automatically look up and output word definition
-- parse the subtitle (*.srt) and replay the movie when the word is spoken
+- Extract big words using Zipf
+- Automatically look up and output word definition
+- Parse the subtitle (*.srt) and replay the movie when the word is spoken
+- Pronounce the word at point
+- Supports Window/Linux/macOS. [[http://www.mplayerhq.hu/][Mplayer]] is required for playing video.
 
 Screenshot:
 
@@ -93,6 +95,12 @@ Make sure the org tree node has the property =SRT_PATH=.
 
 Sample of org file:
 #+begin_example
+** Pronounce word at point
+Use =mybigword-pronounce-word= to pronounce the word at point.
+
+The word's audio is downloaded from [[https://dictionary.cambridge.org]].
+
+The audio download url could be customized in =mybigword-default-audio-url-function=.
 * Star Trek s06e26
   :PROPERTIES:
   :SRT_PATH: ~/Star.Trek.DS9-s06e26.Tears.of.the.Prophets.srt
