@@ -110,6 +110,8 @@ telepathic egotist
 
 Move focus over the word like "egotist", and run =M-x mybigword-play-video-of-word-at-point=, =mplayer= plays the corresponding video at the time the word is spoken.
 
+The video should be in the same directory of subtitle and its file name should be similar to the subtitle's file name.
+
 Mplayer's path can be customized through =mybigword-mplayer-program=.
 
 Please note =mybigword-play-video-of-word-at-point= can be used in other major modes. See =mybigword-default-video-info-function= for details.
