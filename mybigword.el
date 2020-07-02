@@ -474,10 +474,10 @@ FILE is the file path."
   "Use START-TIME and VIDEO-PATH to run mplayer."
   (when start-time
     (let* ((default-directory (file-name-directory video-path))
-	   (cmd (format "%s -ss %s -osdlevel 2 %s"
-			mybigword-mplayer-program
-			(mybigword-adjust-start-time start-time)
-			(file-name-nondirectory video-path))))
+           (cmd (format "%s -ss %s -osdlevel 2 %s"
+                        mybigword-mplayer-program
+                        (mybigword-adjust-start-time start-time)
+                        (file-name-nondirectory (shell-quote-argument video-path)))))
       (mybigword-async-shell-command cmd))))
 
 (defun mybigword-org-video-info (word)
