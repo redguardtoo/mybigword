@@ -470,7 +470,7 @@ FILE is the file path."
 			      command)))
     (set-process-sentinel proc 'ignore)))
 
-(defun mybigword-run-mplayer (start-time video-path)
+(defun mybigword-run-mplayer (start-time video-path &optional srt-path)
   "Use START-TIME and VIDEO-PATH to run mplayer."
   (when start-time
     (let* ((default-directory (file-name-directory video-path))
@@ -478,6 +478,9 @@ FILE is the file path."
                         mybigword-mplayer-program
                         (mybigword-adjust-start-time start-time)
                         (file-name-nondirectory (shell-quote-argument video-path)))))
+      (when srt-path
+        (setq cmd (concat cmd " -sub "
+                          (file-name-nondirectory (shell-quote-argument srt-path)))))
       (mybigword-async-shell-command cmd))))
 
 (defun mybigword-org-video-info (word)
@@ -505,7 +508,7 @@ The information is in current org node's \"SRT_PATH\" property."
                                    "\n\n+[0-9]+ *\n"))
              (start-time (mybigword-mplayer-start-time chunks word)))
         (when start-time
-          (setq rlt (list :video-path video-path :start-time start-time))))))
+          (setq rlt (list :video-path video-path :srt-path srt-path :start-time start-time))))))
     rlt))
 
 ;;;###autoload
@@ -519,7 +522,8 @@ Its file name should be similar to the subtitle's file name."
     (when (and word
                (setq info (funcall mybigword-default-video-info-function word)))
       (mybigword-run-mplayer (plist-get info :start-time)
-                             (plist-get info :video-path)))))
+                             (plist-get info :video-path)
+                             (plist-get info :srt-path)))))
 
 (defun mybigword-cambridge-mp3-url (word)
   "Get URL to download mp3 of WORD."
