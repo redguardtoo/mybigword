@@ -112,6 +112,8 @@ Move focus over the word like "egotist", and run =M-x mybigword-play-video-of-wo
 
 The video should be in the same directory of subtitle and its file name should be similar to the subtitle's file name.
 
+The word is either the word at point, or selected string or string from input.
+
 Mplayer's path can be customized through =mybigword-mplayer-program=.
 
 Please note =mybigword-play-video-of-word-at-point= can be used in other major modes. See =mybigword-default-video-info-function= for details.
