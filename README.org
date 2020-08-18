@@ -119,6 +119,10 @@ Mplayer's path can be customized through =mybigword-mplayer-program=.
 Please note =mybigword-play-video-of-word-at-point= can be used in other major modes. See =mybigword-default-video-info-function= for details.
 ** Hide words
 Customize =mybigword-hide-word-function= to hide word for display.
+** Show image of the word
+Use =mybigword-show-image-of-word= to show images of the word at point in external browser.
+
+Please note =browse-url-generic= is used in this command.
 * Contact me
 Report bugs at [[https://github.com/redguardtoo/mybigword]].
 * License
