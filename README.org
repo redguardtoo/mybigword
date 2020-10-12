@@ -110,6 +110,8 @@ telepathic egotist
 
 Move focus over the word like "egotist", and run =M-x mybigword-play-video-of-word-at-point=, =mplayer= plays the corresponding video at the time the word is spoken.
 
+If video is missing, the mp3 with similar name is played. See =mybigword-video2mp3= on how to generate mp3 from video files.
+
 The video should be in the same directory of subtitle and its file name should be similar to the subtitle's file name.
 
 The word is either the word at point, or selected string or string from input.
