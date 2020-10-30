@@ -118,7 +118,7 @@ The word is either the word at point, or selected string or string from input.
 
 Mplayer's path can be customized through =mybigword-mplayer-program=.
 
-Please note =mybigword-play-video-of-word-at-point= can be used in other major modes. See =mybigword-default-video-info-function= for details.
+Please note =mybigword-play-video-of-word-at-point= can be used in other major modes. See =mybigword-default-media-info-function= for details.
 ** Hide words
 Customize =mybigword-hide-word-function= to hide word for display.
 ** Show image of the word
