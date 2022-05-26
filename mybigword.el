@@ -104,9 +104,6 @@
 ;;; Code:
 
 (require 'find-lisp)
-(require 'dictionary nil t)
-(require 'outline)
-(require 'org)
 (require 'cl-lib)
 (require 'url)
 (require 'browse-url)
@@ -259,6 +256,10 @@ If it's `mybigword-format-with-dictionary', the `dictionary-definition' is used.
   (with-temp-buffer
     (insert-file-contents file)
     (buffer-string)))
+
+(declare-function dictionary-definition "dictionary")
+(declare-function outline-up-heading "outline")
+(declare-function org-entry-get "org")
 
 ;;;###autoload
 (defun mybigword-update-cache ()
