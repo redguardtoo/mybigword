@@ -1,4 +1,8 @@
 * mybigword
+[[https://github.com/redguardtoo/mybigword/actions/workflows/test.yml][https://github.com/redguardtoo/mybigword/actions/workflows/test.yml/badge.svg]]
+[[http://melpa.org/#/mybigword][file:http://melpa.org/packages/mybigword-badge.svg]]
+[[http://stable.melpa.org/#/mybigword][file:http://stable.melpa.org/packages/mybigword-badge.svg]]
+
 Vocabulary builder using Zipf to extract English big words.
 
 Zipf frequency of a word is the base-10 logarithm of the number of times it
