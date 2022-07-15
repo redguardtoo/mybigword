@@ -633,10 +633,10 @@ The word is either the word at point, or selected string or string from input."
       (message "Sorry, can't find pronunciation for \"%s\"" word)))))
 
 ;;;###autoload
-(defun mybigword-pronounce-word ()
-  "Pronounce word."
-  (interactive)
-  (let* ((word (mybigword--word-at-point)))
+(defun mybigword-pronounce-word (&optional input-p)
+  "Pronounce word.  If INPUT-P is t, user need input word."
+  (interactive "P")
+  (let* ((word (if input-p (read-string "Word: ") (mybigword--word-at-point))))
     (when word
       (mybigword-pronounce-word-internal word))))
 
