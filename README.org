@@ -28,6 +28,8 @@ Run =mybigword-show-big-words-from-file= or =mybigword-show-big-words-from-curre
 
 The above commands can be customized to look up word definition. See the tip [[Format output]].
 
+Run =mybigword-big-words-in-current-window= to select a word to hear its pronunciation and get its definition.
+
 Here is the big words extracted from the script of [[https://www.imdb.com/title/tt0708665/?ref_=ttep_ep12][Star Trek: Deep Space Nine  S06E12 "Who Mourns for Morn?"]]:
 #+begin_example
 aboveboard 1.53
