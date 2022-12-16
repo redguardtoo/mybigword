@@ -611,7 +611,7 @@ The word is either the word at point, or selected string or string from input."
   (cond
    ;; macOS
    ((eq system-type 'darwin)
-    "open")
+    "afplay")
    ;; Windows
    ((eq system-type 'windows-nt)
     "start")
