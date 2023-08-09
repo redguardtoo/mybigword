@@ -9,6 +9,7 @@ auto-save-list
 tramp
 .\#*
 *_flymake.el
+deps/
 
 # Org-mode
 .org-id-locations

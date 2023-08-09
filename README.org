@@ -87,7 +87,7 @@ Customize =mybigword-excluded-words= or =mybigword-personal-excluded-words= to e
 ** Format output
 Customize =mybigword-default-format-function= to format the word for display.
 
-For example, if it's =mybigword-format-with-dictionary=, the =dictionary-definition= is used to find the definitions of all big words.
+For example, if it's =mybigword-format-with-dictionary=, the =mybigword-word-definition-function=, whose default value is =dictionary-definition=, is used to find the definitions of all big words.
 
 Sample to display the dictionary definitions of big words:
 #+begin_src elisp
